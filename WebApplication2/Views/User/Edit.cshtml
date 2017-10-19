@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "Edit";
+}
+@model Model.User
+
+<h2>Edit (Model)</h2>
+<div>@ViewBag.Message</div>
+@using (Html.BeginForm("Edit", "User", FormMethod.Post))
+{
+    <table>
+        <tr>
+            <td>Id:</td>
+            <td>@Html.TextBoxFor(x => x.Id, new { disabled = "true" })</td>
+            <td>@Html.ValidationMessageFor(x => x.Id)</td>
+        </tr>
+        <tr>
+            <td>Name:</td>
+            <td>@Html.TextBoxFor(x => x.Name)</td>
+            <td>@Html.ValidationMessageFor(x => x.Name)</td>
+        </tr>
+        <tr>
+            <td>Street:</td>
+            <td>@Html.TextBoxFor(x => x.Address)</td>
+            <td>@Html.ValidationMessageFor(x => x.Address)</td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit" /></td>
+        </tr>
+    </table>    
+}
+
+<hr />
+<h2>Edit (jQuery)</h2>
+<div id="editMessage" style="display: none">Success!!!</div>
+<div id="errorMessage" style="display: none">Error</div>
+<table>
+    <tr>
+        <td>Id:</td>
+        <td>@Html.TextBox("userId", Model.Id, new { disabled = "true" })</td>
+    </tr>
+    <tr>
+        <td>Name:</td>
+        <td>@Html.TextBox("username", Model.Name)</td>
+    </tr>
+    <tr>
+        <td>Address:</td>
+        <td>@Html.TextBox("address", Model.Address)</td>
+    </tr>
+    <tr>
+        <td><input type="submit" id="edit" value="Submit" /></td>
+    </tr>
+</table>
+
+<hr />
+<h2>Edit (AngularJS)</h2>
+<div ng-app="user.app" ng-controller="userCtrl as userCtrl" ng-init="userCtrl.init('@Model.Id','@Model.Name','@Model.Address')">
+    <div ng-bind-html="userCtrl.message"></div>
+    <form novalidate name="userForm" ng-submit="userCtrl.editUser(userForm)">
+        <table>
+            <tr>
+                <td>Id:</td>
+                <td><input type="text" ng-model="userCtrl.user.id" ng-disabled="true" /></td>
+            </tr>
+            <tr>
+                <td>Name:</td>
+                <td><input type="text" ng-model="userCtrl.user.name" /></td>
+            </tr>
+            <tr>
+                <td>Address:</td>
+                <td><input type="text" ng-model="userCtrl.user.address" /></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Submit" /></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+@section scripts {
+    <script type="text/javascript" src="~/Scripts/user.js"></script>
+    @Scripts.Render("~/bundles/angular")
+}
+

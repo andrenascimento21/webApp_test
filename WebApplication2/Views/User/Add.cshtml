@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "Add";
+}
+@model Model.User
+
+<h2>Add (Model)</h2>
+<div>@ViewBag.Message</div>
+@using (Html.BeginForm("Add", "User", FormMethod.Post))
+{
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td>@Html.TextBoxFor(x => x.Name)</td>
+            <td>@Html.ValidationMessageFor(x => x.Name)</td>
+        </tr>
+        <tr>
+            <td>Street:</td>
+            <td>@Html.TextBoxFor(x => x.Address)</td>
+            <td>@Html.ValidationMessageFor(x => x.Address)</td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit" /></td>
+        </tr>
+    </table>    
+}
+
+<hr />
+<h2>Add (jQuery)</h2>
+<div id="addMessage" style="display: none"></div>
+<div id="errorMessage" style="display: none"></div>
+<table>
+    <tr>
+        <td>Name:</td>
+        <td>@Html.TextBox("username", String.Empty)</td>
+    </tr>
+    <tr>
+        <td>Address:</td>
+        <td>@Html.TextBox("useraddress", String.Empty)</td>
+    </tr>
+    <tr>
+        <td><input type="submit" id="add" value="Submit" /></td>
+    </tr>
+</table>
+
+<hr />
+<h2>Add (AngularJS)</h2>
+<div ng-app="user.app" ng-controller="userCtrl as userCtrl" ng-init="userCtrl.init('','','')">
+    <div ng-bind-html="userCtrl.message"></div>
+    <form novalidate name="userForm" ng-submit="userCtrl.addUser(userForm)">
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td><input type="text" ng-model="userCtrl.user.name" /></td>
+            </tr>
+            <tr>
+                <td>Address:</td>
+                <td><input type="text" ng-model="userCtrl.user.address" /></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Submit" /></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+@section scripts {
+    <script type="text/javascript" src="~/Scripts/user.js"></script>
+    @Scripts.Render("~/bundles/angular")
+}
+

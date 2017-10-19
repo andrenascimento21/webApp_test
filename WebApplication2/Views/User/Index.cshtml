@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+@model List<Model.User>
+
+<h2>Create User</h2>
+
+<input type="button" value="Add user" onclick="location.href='@Url.Action("Add")'" />
+<hr />
+
+<h2>Index (Model)</h2>
+
+<table>
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>User name</td>
+            <td>Address</td>
+        </tr>
+    </thead>
+    @foreach(var u in Model)
+    {
+        <tr>
+            <td>@u.Id</td>
+            <td>@u.Name</td>
+            <td>@u.Address</td>
+            <td>@Html.ActionLink("Edit", "Edit", new { id= u.Id })</td>
+            <td>@Html.ActionLink("Delete", "DeleteUser", new { id = u.Id })</td>
+        </tr>
+    }
+</table>
+<hr />
+
+<h2>Index (jQuery)</h2>
+
+<table id="userTable">
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>User name</td>
+            <td>Address</td>
+        </tr>
+    </thead>
+</table>
+<hr />
+
+<h2>Index (AngularJS)</h2>
+<div ng-app="user.app" ng-controller="userCtrl as userCtrl" ng-init="userCtrl.getUsers()">
+    <table id="user_table">
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>User name</td>
+                <td>Address</td>
+            </tr>
+        </thead>
+        <tr ng-repeat="item in userCtrl.users">
+            <td>{{item.Id}} </td>
+            <td>{{item.Name}} </td>
+            <td>{{item.Address}} </td>
+            <td><a href="/user/edit/{{item.Id}}">Edit</a> </td>
+            <td><a ng-click="userCtrl.deleteUser(item)">Delete</a> </td>
+        </tr>
+    </table>
+</div>
+
+@section scripts {
+    <script type="text/javascript" src="~/Scripts/user.js"></script>
+    @Scripts.Render("~/bundles/angular")
+}
